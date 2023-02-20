@@ -1,5 +1,6 @@
 // 1. Require Modules
 const express = require("express");
+const eventRoutes = require("./routes/eventRoutes");
 
 // 2. Create application
 const app = express();
@@ -17,6 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+app.use("/events", eventRoutes);
+
 
 // 6. Start the server
 app.listen(port, host, () => {

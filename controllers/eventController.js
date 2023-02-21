@@ -2,7 +2,14 @@ const model = require("../models/event");
 
 // 1. GET /events: Send all events to the user
 exports.index = (req, res) => {
-  res.render("./event/events", { events: model.find() });
+  res.render("./event/events", {
+    events: model.find(),
+    workshops: model.findByCategory("workshop"),
+    meetups: model.findByCategory("meetup"),
+    fairs: model.findByCategory("careerfair"),
+    headshots: model.findByCategory("headshot"),
+    other: model.findByCategory("other"),
+  });
 };
 
 // 2. GET /events/new: HTML form for creating a new event

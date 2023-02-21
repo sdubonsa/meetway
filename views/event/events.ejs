@@ -1,25 +1,63 @@
 <body class="flex flex-col h-screen justify-between bg-slate-800">
     <%- include('../partials/header.ejs') %>
     <div class="text-white px-28 flex items-start justify-center flex-col mb-auto h-full">
-        <div class="mb-10">
-            <h2 class="text-2xl mb-3">Career Meetups</h2>
-            <ul>
-                <% if(events.length) { %>
-                    <% events.forEach(event => { %>
-                        <a href="/events/<%= event.id %>"><li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white" ><%= event.title %></li></a>
-                    <% }) %>
-                <% } %>
-            </ul>
-        </div>
+        <% if(events.length) { %>
 
-        <div>
-            <h2 class="text-2xl mb-3">Career Workshops</h2>
-            <ul>
-                <li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white"><a href='event.html'>Resume Writing</a></li>
-                <li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white"><a href='event.html'>Cover Letter Writing</a></li>
-                <li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white"><a href='event.html'>Career Fair Crash Course</a></li>
-            </ul>
-        </div>
+            <!-- WORKSHOPS -->
+            <% if(workshops.length) { %>
+                <div class="mb-10">
+                    <h2 class="text-2xl mb-3">Career Workshops</h2>
+                    <ul>
+                        <% workshops.forEach(event => { %>
+                            <a href="/events/<%= event.id %>"><li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white" ><%= event.title %></li></a>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% } %>
+
+            <!-- MEETUPS -->
+            <% if(meetups.length) { %>
+                <div class="mb-10">
+                    <h2 class="text-2xl mb-3">Career Meetups</h2>
+                    <ul>
+
+                    </ul>
+                </div>            
+            <% } %>
+
+            <!-- CAREER FAIRS -->
+            <% if(fairs.length) { %>
+                <div class="mb-10">
+                    <h2 class="text-2xl mb-3">Career Fairs</h2>
+                    <ul>
+
+                    </ul>
+                </div>            
+            <% } %>
+
+            <!-- HEADSHOTS -->
+            <% if(headshots.length) { %>
+                <div class="mb-10">
+                    <h2 class="text-2xl mb-3">Professional Headshots</h2>
+                    <ul>
+
+                    </ul>
+                </div>
+            <% } %>
+
+            <!-- OTHER -->
+            <% if(other.length) { %>
+                <div class="mb-10">
+                    <h2 class="text-2xl mb-3">Other</h2>
+                    <ul>
+
+                    </ul>
+                </div>
+            <% } %>
+        <% } else { %>
+            <h2>There are no events to display.</h2>
+        <% } %>
     </div>
+
     <%- include('../partials/footer.ejs') %>
 </body>

@@ -32,7 +32,35 @@ exports.show = (req, res, next) => {
   }
 };
 
-// 7.  DELETE /stories/:id: Delete story by ID
+// 5. GET /stories/:id/edit: Send HTML form for editing story
+exports.edit = (req, res, next) => {
+  let id = req.params.id;
+  let event = model.findById(id);
+
+  if (event) {
+    res.render("./event/edit", { event: event });
+  } else {
+    let err = new Error("Cannot find a event with id " + id);
+    err.status = 404;
+    next(err);
+  }
+};
+
+// 6. PUT /stories/:id: Update event by ID
+exports.update = (req, res, next) => {
+  let event = req.body;
+  let id = req.params.id;
+
+  if (model.updateById(id, event)) {
+    res.redirect("/events/" + id);
+  } else {
+    let err = new Error("Cannot find a event with id " + id);
+    err.status = 404;
+    next(err);
+  }
+};
+
+// 7.  DELETE /stories/:id: Delete event by ID
 exports.delete = (req, res, next) => {
   let id = req.params.id;
   if (model.deleteById(id)) {

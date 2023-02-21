@@ -34,7 +34,8 @@ exports.updateById = (id, newevent) => {
 
   if (event) {
     event.title = newevent.title;
-    event.content = newevent.content;
+    event.details = newevent.details;
+    event.location = newevent.location;
     return true;
   } else {
     return false;

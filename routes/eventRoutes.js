@@ -15,6 +15,12 @@ router.post("/", controller.create);
 // 4. GET BY SEPCIF ID
 router.get("/:id", controller.show);
 
+// 5. GET /stories/:id/edit: Send HTML form for editing story
+router.get("/:id/edit", controller.edit);
+
+// 6. PUT /stories/:id: Update story by ID
+router.put("/:id", controller.update);
+
 // 7.  DELETE /stories/:id: Delete story by ID
 router.delete("/:id", controller.delete);
 

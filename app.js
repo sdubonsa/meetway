@@ -1,6 +1,7 @@
 // 1. Require Modules
 const express = require("express");
 const eventRoutes = require("./routes/eventRoutes");
+const methodOVerride = require("method-override");
 
 // 2. Create application
 const app = express();
@@ -13,6 +14,7 @@ app.set("view engine", "ejs");
 // 4. Middleware
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOVerride("_method"));
 
 // 5. Set-up routes
 app.get("/", (req, res) => {

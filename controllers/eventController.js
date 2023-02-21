@@ -10,7 +10,7 @@ exports.new = (req, res) => {
   res.render("./event/newEvent");
 };
 
-// 3. POST /stories: Create a event story
+// 3. POST /events: Create a event story
 exports.create = (req, res) => {
   let event = req.body;
 
@@ -25,6 +25,18 @@ exports.show = (req, res, next) => {
 
   if (event) {
     res.render("./event/event", { event: event });
+  } else {
+    let err = new Error("Cannot find a event with id " + id);
+    err.status = 404;
+    next(err);
+  }
+};
+
+// 7.  DELETE /stories/:id: Delete story by ID
+exports.delete = (req, res, next) => {
+  let id = req.params.id;
+  if (model.deleteById(id)) {
+    res.redirect("/events");
   } else {
     let err = new Error("Cannot find a event with id " + id);
     err.status = 404;

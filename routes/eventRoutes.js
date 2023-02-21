@@ -15,4 +15,7 @@ router.post("/", controller.create);
 // 4. GET BY SEPCIF ID
 router.get("/:id", controller.show);
 
+// 7.  DELETE /stories/:id: Delete story by ID
+router.delete("/:id", controller.delete);
+
 module.exports = router;

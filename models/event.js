@@ -21,13 +21,10 @@ exports.findById = (id) => {
 };
 
 exports.save = (event) => {
-  const start = event.starttime.toLocaleString(DateTime.DATE_MED);
-  console.log(start);
-
   event.id = uuidv4();
 
-  event.starttime = "test";
-  event.endtime = event.endtime.toLocaleString(DateTime.DATETIME_MED);
+  event.starttime = DateTime.fromISO(event.starttime).toLocaleString(DateTime.DATETIME_MED);
+  event.endtime = DateTime.fromISO(event.endtime).toLocaleString(DateTime.TIME_SIMPLE);
 
   events.push(event);
 };

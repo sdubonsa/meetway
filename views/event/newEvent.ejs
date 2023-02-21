@@ -2,7 +2,7 @@
     <%- include('../partials/header.ejs') %>
         <div class="text-white flex px-20 items-start justify-center flex-col mb-auto h-full">
             <div class="bg-slate-500 h-4/5 w-full rounded-lg">
-                <form action="#" class="flex flex-col m-4 h-full gap-2">
+                <form action="/events" method="POST" class="flex flex-col m-4 h-full gap-2">
                     <div class="flex">
                         <label class="w-1/6" for="category">Category</label>
                         <select class="bg-slate-900 w-full p-1 rounded-r-md rounded-r-md" name="category" id="category">
@@ -25,18 +25,18 @@
                     </div>
 
                     <div class="flex">
-                        <label class="w-1/6" for="where">Where</label>
-                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="text" name="where" id="where" placeholder="Location">
+                        <label class="w-1/6" for="location">Location</label>
+                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="text" name="location" id="location" placeholder="Location">
                     </div>
 
                     <div class="flex">
-                        <label class="w-1/6" for="start-date">Start</label>
-                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="date" name="start-date" id="start-date">
+                        <label class="w-1/6" for="starttime">Start</label>
+                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="starttime" id="starttime">
                     </div>
 
                     <div class="flex">
-                        <label class="w-1/6" for="end-date">End</label>
-                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="date" name="end-date" id="end-date">
+                        <label class="w-1/6" for="endtime">End</label>
+                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="endtime" id="endtime">
                     </div>
                     
                     <div class="flex">                    

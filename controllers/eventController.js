@@ -10,7 +10,15 @@ exports.new = (req, res) => {
   res.render("./event/newEvent");
 };
 
-// 4. GET /stories/:id Send story with specific id
+// 3. POST /stories: Create a event story
+exports.create = (req, res) => {
+  let event = req.body;
+
+  model.save(event);
+  res.redirect("/events");
+};
+
+// 4. GET /stories/:id Send event with specific id
 exports.show = (req, res, next) => {
   let id = req.params.id;
   let event = model.findById(id);

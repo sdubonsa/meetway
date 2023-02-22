@@ -1,0 +1,11 @@
+<body class="flex flex-col h-screen justify-between bg-slate-800">
+    <%- include('./partials/header.ejs') %>
+    <div class="bg-slate-800">
+        <div class="text-white px-28 flex items-start justify-center flex-col mb-auto h-full">
+            <h1 class="pb-8 text-4xl">ERROR! :(</h1>
+            <p class="pb-4 text-lg"><%= error.status %></p>
+            <p><%= error.message %></p>
+        </div>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+</body>

@@ -2,7 +2,7 @@
     <%- include('../partials/header.ejs') %>
         <div class="text-white flex px-20 items-start justify-center flex-col mb-auto h-full">
             <div class="bg-slate-500 h-4/5 w-full rounded-lg">
-                <form action="/events" method="POST" class="flex flex-col m-4 h-full gap-2">
+                <form action="/events" method="POST" enctype="multipart/form-data" class="flex flex-col m-4 h-full gap-2">
                     <div class="flex">
                         <label class="w-1/6" for="category">Category</label>
                         <select class="bg-slate-900 w-full p-1 rounded-r-md rounded-r-md" name="category" id="category">

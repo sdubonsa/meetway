@@ -1,5 +1,6 @@
 const express = require("express");
 const controller = require("../controllers/eventController");
+const { fileUpload } = require("../middleware/fileUpload");
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.get("/", controller.index);
 router.get("/new", controller.new);
 
 // 3. POST /stories: Create a new story
-router.post("/", controller.create);
+router.post("/", fileUpload, controller.create);
 
 // 4. GET BY SEPCIF ID
 router.get("/:id", controller.show);

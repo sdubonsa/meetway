@@ -1,5 +1,4 @@
 const model = require("../models/event");
-const { DateTime } = require("luxon");
 
 // 1. GET /events: Send all events to the user
 exports.index = (req, res) => {
@@ -21,6 +20,11 @@ exports.new = (req, res) => {
 // 3. POST /events: Create a event story
 exports.create = (req, res) => {
   let event = req.body;
+  let imagePath = "/images/" + req.file.filename;
+
+  console.log(imagePath);
+
+  event.image = imagePath;
 
   model.save(event);
   res.redirect("/events");
@@ -44,9 +48,6 @@ exports.show = (req, res, next) => {
 exports.edit = (req, res, next) => {
   let id = req.params.id;
   let event = model.findById(id);
-  let currStart = event.starttime.toString();
-
-  console.log(currStart);
 
   if (event) {
     res.render("./event/edit", { event: event });

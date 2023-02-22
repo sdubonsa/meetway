@@ -20,7 +20,9 @@
                 <div class="mb-10">
                     <h2 class="text-2xl mb-3">Career Meetups</h2>
                     <ul>
-
+                        <% meetups.forEach(event => { %>
+                            <a href="/events/<%= event.id %>"><li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white" ><%= event.title %></li></a>
+                        <% }) %>
                     </ul>
                 </div>            
             <% } %>
@@ -30,7 +32,9 @@
                 <div class="mb-10">
                     <h2 class="text-2xl mb-3">Career Fairs</h2>
                     <ul>
-
+                        <% fairs.forEach(event => { %>
+                            <a href="/events/<%= event.id %>"><li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white" ><%= event.title %></li></a>
+                        <% }) %>
                     </ul>
                 </div>            
             <% } %>
@@ -40,7 +44,9 @@
                 <div class="mb-10">
                     <h2 class="text-2xl mb-3">Professional Headshots</h2>
                     <ul>
-
+                        <% headshots.forEach(event => { %>
+                            <a href="/events/<%= event.id %>"><li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white" ><%= event.title %></li></a>
+                        <% }) %>
                     </ul>
                 </div>
             <% } %>
@@ -50,7 +56,9 @@
                 <div class="mb-10">
                     <h2 class="text-2xl mb-3">Other</h2>
                     <ul>
-
+                        <% other.forEach(event => { %>
+                            <a href="/events/<%= event.id %>"><li class="text-sm pl-10 mb-2 text-slate-300 hover:text-white" ><%= event.title %></li></a>
+                        <% }) %>
                     </ul>
                 </div>
             <% } %>

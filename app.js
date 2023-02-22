@@ -1,6 +1,7 @@
 // 1. Require Modules
 const express = require("express");
 const eventRoutes = require("./routes/eventRoutes");
+const mainRoutes = require("./routes/mainRoutes");
 const methodOVerride = require("method-override");
 
 // 2. Create application
@@ -17,11 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOVerride("_method"));
 
 // 5. Set-up routes
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.use("/", mainRoutes);
 
 app.use("/events", eventRoutes);
+
 
 
 // 6. Start the server

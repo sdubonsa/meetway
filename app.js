@@ -3,8 +3,6 @@ const express = require("express");
 const eventRoutes = require("./routes/eventRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const methodOVerride = require("method-override");
-const path = require("path");
-const multer = require("multer");
 
 // 2. Create application
 const app = express();
@@ -18,50 +16,6 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOVerride("_method"));
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/images");
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(
-      null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
-    );
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  const mimeTypes = ["image/jpeg", "image/png", "image/gif"];
-
-  if (mimeTypes.includes(file.mimetype)) {
-    return cb(null, true);
-  } else {
-    cb(
-      new Error(
-        "Invalid file type. Only jpeg, jpg, png and gif image files are allowed."
-      )
-    );
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 2 * 1024 * 1024 },
-  fileFilter: fileFilter,
-}).single("image");
-
-exports.fileUpload = (req, res, next) => {
-  upload(req, res, (err) => {
-    if (err) {
-      err.status = 400;
-      next(err);
-    } else {
-      next();
-    }
-  });
-};
 
 // 5. Set-up routes
 app.use("/", mainRoutes);

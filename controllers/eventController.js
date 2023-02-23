@@ -21,10 +21,9 @@ exports.new = (req, res) => {
 exports.create = (req, res) => {
   let event = req.body;
   let imagePath = "/images/" + req.file.filename;
-
-  console.log(imagePath);
-
   event.image = imagePath;
+
+  console.log(event.starttime);
 
   model.save(event);
   res.redirect("/events");
@@ -35,8 +34,11 @@ exports.show = (req, res, next) => {
   let id = req.params.id;
   let event = model.findById(id);
 
+  let start = model.convertToString(event.starttime);
+  let end = model.convertToString(event.endtime);
+
   if (event) {
-    res.render("./event/event", { event: event });
+    res.render("./event/event", { event: event, start: start, end: end });
   } else {
     let err = new Error("Cannot find a event with id " + id);
     err.status = 404;

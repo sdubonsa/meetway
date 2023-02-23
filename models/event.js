@@ -1,7 +1,68 @@
 const { v4: uuidv4 } = require("uuid");
 const { DateTime } = require("luxon");
 
-const events = [];
+const events = [
+  {
+    id: "1",
+    title: "Wells Fargo Meetup",
+    category: "meetup",
+    details: "Come meet with us!",
+    location: "Union 203",
+    starttime: "2023-02-23T01:30",
+    endtime: "2023-02-23T02:30",
+    image: "/images/welcome.jpg",
+  },
+  {
+    id: "2",
+    title: "Wells Fargo Career Fair",
+    category: "careerfair",
+    details: "Come meet with us!",
+    location: "Union 203",
+    starttime: "2023-02-23T01:30",
+    endtime: "2023-02-23T02:30",
+    image: "/images/welcome.jpg",
+  },
+  {
+    id: "3",
+    title: "Coding Workshop",
+    category: "workshop",
+    details: "Come meet with us!",
+    location: "Union 203",
+    starttime: "2023-02-23T01:30",
+    endtime: "2023-02-23T02:30",
+    image: "/images/welcome.jpg",
+  },
+  {
+    id: "4",
+    title: "Career Center Headshot",
+    category: "headshot",
+    details: "Come meet with us!",
+    location: "Union 203",
+    starttime: "2023-02-23T01:30",
+    endtime: "2023-02-23T02:30",
+    image: "/images/welcome.jpg",
+  },
+  {
+    id: "5",
+    title: "Dog Racing",
+    category: "other",
+    details: "Come meet with us!",
+    location: "Union 203",
+    starttime: "2023-02-23T01:30",
+    endtime: "2023-02-23T02:30",
+    image: "/images/welcome.jpg",
+  },
+  {
+    id: "6",
+    title: "Monkey Career Fair",
+    category: "careerfair",
+    details: "Come meet with us!",
+    location: "Union 203",
+    starttime: "2023-02-23T01:30",
+    endtime: "2023-02-23T02:30",
+    image: "/images/welcome.jpg",
+  },
+];
 
 exports.find = () => events;
 
@@ -15,10 +76,6 @@ exports.findByCategory = (category) => {
 
 exports.save = (event) => {
   event.id = uuidv4();
-
-  event.starttime = DateTime.fromISO(event.starttime).toLocaleString(DateTime.DATETIME_MED);
-  event.endtime = DateTime.fromISO(event.endtime).toLocaleString(DateTime.TIME_SIMPLE);
-
   events.push(event);
 };
 
@@ -27,8 +84,11 @@ exports.updateById = (id, newevent) => {
 
   if (event) {
     event.title = newevent.title;
+    event.category = newevent.category;
     event.details = newevent.details;
     event.location = newevent.location;
+    event.starttime = newevent.starttime;
+    event.endtime = newevent.endtime;
     return true;
   } else {
     return false;
@@ -44,4 +104,10 @@ exports.deleteById = (id) => {
   } else {
     return false;
   }
+};
+
+exports.convertToString = (time) => {
+  console.log(time);
+  console.log(DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED));
+  return DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED);
 };

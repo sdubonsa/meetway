@@ -5,7 +5,7 @@
                 <form method="POST" action = "/events/<%=event.id%>?_method=PUT" class="flex flex-col m-4 h-full gap-2">
                     <div class="flex">
                         <label class="w-1/6" for="category">Category</label>
-                        <select class="bg-slate-900 w-full p-1 rounded-r-md rounded-r-md" name="category" id="category" autofocus="<%= event.category %>">
+                        <select class="bg-slate-900 w-full p-1 rounded-r-md rounded-r-md" name="category" id="category">
                             <option value="workshop">Workshop</option>
                             <option value="meetup">Meet Up</option>
                             <option value="careerfair">Career Fair</option>
@@ -31,12 +31,12 @@
 
                     <div class="flex">
                         <label class="w-1/6" for="starttime">Start</label>
-                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="starttime" id="starttime">
+                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="starttime" id="starttime" value="<%= event.starttime %>">
                     </div>
 
                     <div class="flex">
                         <label class="w-1/6" for="endtime">End</label>
-                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="endtime" id="endtime">
+                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="endtime" id="endtime" value="<%= event.endtime %>">
                     </div>
                     
                     <div class="flex">                    

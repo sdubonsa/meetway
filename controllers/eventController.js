@@ -2,14 +2,19 @@ const model = require("../models/event");
 
 // 1. GET /events: Send all events to the user
 exports.index = (req, res) => {
-  res.render("./event/events", {
-    events: model.find(),
-    workshops: model.findByCategory("workshop"),
-    meetups: model.findByCategory("meetup"),
-    fairs: model.findByCategory("careerfair"),
-    headshots: model.findByCategory("headshot"),
-    other: model.findByCategory("other"),
-  });
+  model
+    .find()
+    .then((events) =>
+      res.render("./event/events", {
+        events: model.find(),
+        //workshops: model.findByCategory("workshop"),
+        //meetups: model.findByCategory("meetup"),
+        //fairs: model.findByCategory("careerfair"),
+        //headshots: model.findByCategory("headshot"),
+        //other: model.findByCategory("other"),
+      })
+    )
+    .catch((err) => next(err));
 };
 
 // 2. GET /events/new: HTML form for creating a new event
@@ -18,13 +23,29 @@ exports.new = (req, res) => {
 };
 
 // 3. POST /events: Create a event story
-exports.create = (req, res) => {
-  let event = req.body;
-  let imagePath = "/images/" + req.file.filename;
-  event.image = imagePath;
+exports.create = (req, res, next) => {
+  let event = new model(req.body); //create a new event document
 
-  model.save(event);
-  res.redirect("/events");
+  let start = new Date(req.body.starttime);
+  let end = new Date(req.body.endtime);
+  let imagePath = "/images/" + req.file.filename;
+
+  event.image = imagePath;
+  event.starttime = start;
+  event.endttime = end;
+
+  event
+    .save() //insert the document to the database
+    .then((event) => {
+      event.image = imagePath;
+      res.redirect("/events");
+    })
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        err.status = 400;
+      }
+      next(err);
+    });
 };
 
 // 4. GET /stories/:id Send event with specific id

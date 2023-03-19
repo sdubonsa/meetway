@@ -69,15 +69,19 @@ const eventSchema = new Schema({
   category: { type: String, required: [true, "category is required"] },
   details: { type: String, required: [true, "detail is required"] },
   location: { type: String, required: [true, "location is required"] },
-  starttime: { type: String, required: [true, "starttime is required"] },
-  endtime: { type: String, required: [true, "endttime is required"] },
+  starttime: { type: Date, required: [true, "starttime is required"] },
+  endtime: { type: Date, required: [true, "endttime is required"] },
   image: { type: String, required: [true, "image is required"] },
-});
+},{timestamps: true});
 
 module.exports = mongoose.model("Event", eventSchema);
 
-exports.convertToString = (time) => {
-  console.log(time);
-  console.log(DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED));
-  return DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED);
+exports.findByCategory = (category) => {
+  return events.filter((event) => event.category === category);
 };
+
+//exports.convertToString = (time) => {
+ // console.log(time);
+  //console.log(DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED));
+  //return DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED);
+//};

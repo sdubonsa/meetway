@@ -1,5 +1,5 @@
-const { v4: uuidv4 } = require("uuid");
-const { DateTime } = require("luxon");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const events = [
   {
@@ -64,47 +64,17 @@ const events = [
   },
 ];
 
-exports.find = () => events;
+const eventSchema = new Schema({
+  title: { type: String, required: [true, "title is required"] },
+  category: { type: String, required: [true, "category is required"] },
+  details: { type: String, required: [true, "detail is required"] },
+  location: { type: String, required: [true, "location is required"] },
+  starttime: { type: String, required: [true, "starttime is required"] },
+  endtime: { type: String, required: [true, "endttime is required"] },
+  image: { type: String, required: [true, "image is required"] },
+});
 
-exports.findById = (id) => {
-  return events.find((event) => event.id === id);
-};
-
-exports.findByCategory = (category) => {
-  return events.filter((event) => event.category === category);
-};
-
-exports.save = (event) => {
-  event.id = uuidv4();
-  events.push(event);
-};
-
-exports.updateById = (id, newevent) => {
-  let event = events.find((event) => event.id === id);
-
-  if (event) {
-    event.title = newevent.title;
-    event.category = newevent.category;
-    event.details = newevent.details;
-    event.location = newevent.location;
-    event.starttime = newevent.starttime;
-    event.endtime = newevent.endtime;
-    return true;
-  } else {
-    return false;
-  }
-};
-
-exports.deleteById = (id) => {
-  let index = events.findIndex((event) => event.id === id);
-
-  if (index !== -1) {
-    events.splice(index, 1);
-    return true;
-  } else {
-    return false;
-  }
-};
+module.exports = mongoose.model("Event", eventSchema);
 
 exports.convertToString = (time) => {
   console.log(time);

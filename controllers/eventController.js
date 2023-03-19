@@ -6,15 +6,15 @@ exports.index = (req, res) => {
     .find()
     .then((events) =>
       res.render("./event/events", {
-        events: model.find(),
-        //workshops: model.findByCategory("workshop"),
-        //meetups: model.findByCategory("meetup"),
-        //fairs: model.findByCategory("careerfair"),
-        //headshots: model.findByCategory("headshot"),
-        //other: model.findByCategory("other"),
+        events,
+        workshops: findByCategory(events, "workshop"),
+        meetups: findByCategory(events, "meetup"),
+        fairs: findByCategory(events, "careerfair"),
+        headshots: findByCategory(events, "headshot"),
+        other: findByCategory(events, "other"),
       })
     )
-    .catch((err) => next(err));
+    .catch((err) => console.log(err));
 };
 
 // 2. GET /events/new: HTML form for creating a new event
@@ -51,19 +51,31 @@ exports.create = (req, res, next) => {
 // 4. GET /stories/:id Send event with specific id
 exports.show = (req, res, next) => {
   let id = req.params.id;
-  let event = model.findById(id);
 
-  let start = model.convertToString(event.starttime);
-  let end = model.convertToString(event.endtime);
-
-  if (event) {
-    res.render("./event/event", { event: event, start: start, end: end });
-  } else {
-    let err = new Error("Cannot find a event with id " + id);
-    err.status = 404;
-    next(err);
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    let err = new Error("Invalid event id");
+    err.status = 400;
+    return next(err);
   }
+
+  model
+    .findById(id)
+    .then((event) => {
+      if (event) {
+        let start = event.starttime.toLocaleString("en-GB", {
+          timeZone: "UTC",
+        });
+        let end = event.endttime.toLocaleString("en-GB", { timeZone: "UTC" });
+        res.render("./event/show", { event, start: start, end: end });
+      } else {
+        let err = new Error("Cannot find a event with id " + id);
+        err.status = 404;
+        next(err);
+      }
+    })
+    .catch((err) => next(err));
 };
+
 
 // 5. GET /stories/:id/edit: Send HTML form for editing story
 exports.edit = (req, res, next) => {
@@ -103,4 +115,8 @@ exports.delete = (req, res, next) => {
     err.status = 404;
     next(err);
   }
+};
+
+function findByCategory(events, category) {
+  return events.filter((event) => event.category === category);
 };

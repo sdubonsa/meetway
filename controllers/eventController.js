@@ -23,8 +23,6 @@ exports.create = (req, res) => {
   let imagePath = "/images/" + req.file.filename;
   event.image = imagePath;
 
-  console.log(event.starttime);
-
   model.save(event);
   res.redirect("/events");
 };

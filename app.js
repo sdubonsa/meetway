@@ -1,5 +1,6 @@
 // 1. Require Modules
 const express = require("express");
+const mongoose = require("mongoose");
 const eventRoutes = require("./routes/eventRoutes");
 const mainRoutes = require("./routes/mainRoutes");
 const methodOVerride = require("method-override");
@@ -10,7 +11,20 @@ const app = express();
 // 3. Configure
 let port = 3000;
 let host = "localhost";
+let url =
+  "mongodb+srv://santiagodubon:hcwmY58Mkmfm3JMP@cluster0.bt6ih5y.mongodb.net/nbda-project3";
 app.set("view engine", "ejs");
+
+//connect to mongodb
+mongoose
+  .connect(url)
+  .then(() => {
+    //start the server
+    app.listen(port, host, () => {
+      console.log("Server is running on port", port);
+    });
+  })
+  .catch((err) => console.log(err));
 
 // 4. Middleware
 app.use(express.static("public"));
@@ -36,9 +50,4 @@ app.use((err, req, res, next) => {
 
   res.status(err.status);
   res.render("error", { error: err });
-});
-
-// 6. Start the server
-app.listen(port, host, () => {
-  console.log("The server is running on port ", port);
 });

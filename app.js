@@ -15,7 +15,7 @@ let url =
   "mongodb+srv://santiagodubon:hcwmY58Mkmfm3JMP@cluster0.bt6ih5y.mongodb.net/nbda-project3";
 app.set("view engine", "ejs");
 
-//connect to mongodb
+// connect to mongodb
 mongoose
   .connect(url)
   .then(() => {
@@ -46,6 +46,7 @@ app.use((err, req, res, next) => {
   if (!err.status) {
     err.status = 500;
     err.message = "Internal Server Error";
+    console.log(err)
   }
 
   res.status(err.status);

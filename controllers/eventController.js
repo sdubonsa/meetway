@@ -14,7 +14,7 @@ exports.index = (req, res) => {
         other: findByCategory(events, "other"),
       })
     )
-    .catch((err) => console.log(err));
+    .catch((err) => next(err));
 };
 
 // 2. GET /events/new: HTML form for creating a new event
@@ -62,11 +62,7 @@ exports.show = (req, res, next) => {
     .findById(id)
     .then((event) => {
       if (event) {
-        let start = event.starttime.toLocaleString("en-GB", {
-          timeZone: "UTC",
-        });
-        let end = event.endttime.toLocaleString("en-GB", { timeZone: "UTC" });
-        res.render("./event/show", { event, start: start, end: end });
+        res.render("./event/event", { event });
       } else {
         let err = new Error("Cannot find a event with id " + id);
         err.status = 404;

@@ -76,10 +76,6 @@ const eventSchema = new Schema({
 
 module.exports = mongoose.model("Event", eventSchema);
 
-exports.findByCategory = (category) => {
-  return events.filter((event) => event.category === category);
-};
-
 //exports.convertToString = (time) => {
  // console.log(time);
   //console.log(DateTime.fromISO(time).toLocaleString(DateTime.DATETIME_MED));

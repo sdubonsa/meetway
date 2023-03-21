@@ -133,14 +133,25 @@ exports.update = (req, res, next) => {
 // 7.  DELETE /stories/:id: Delete event by ID
 exports.delete = (req, res, next) => {
   let id = req.params.id;
-  if (model.deleteById(id)) {
-    res.redirect("/events");
-  } else {
-    let err = new Error("Cannot find a event with id " + id);
-    err.status = 404;
-    next(err);
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    let err = new Error("Invalid event id");
+    err.status = 400;
+    return next(err);
   }
-};
+
+  model
+    .findByIdAndDelete(id, { useFindAndModify: false })
+    .then((event) => {
+      if (event) {
+        res.redirect("/events");
+      } else {
+        let err = new Error("Cannot find a event with id " + id);
+        err.status = 404;
+        next(err);
+      }
+    })
+    .catch((err) => next(err));
+}
 
 function findByCategory(events, category) {
   return events.filter((event) => event.category === category);

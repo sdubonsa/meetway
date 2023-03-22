@@ -86,8 +86,9 @@ exports.edit = (req, res, next) => {
     .findById(id)
     .then((event) => {
       if (event) {
-        console.log(event.starttime);
-        res.render("./event/edit", { event });
+        let start = event.starttime.toISOString().slice(0, -1);
+        let end = event.endtime.toISOString().slice(0, -1);
+        res.render("./event/edit", { event, start, end });
       } else {
         let err = new Error("Cannot find a event with id " + id);
         err.status = 404;

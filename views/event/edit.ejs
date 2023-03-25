@@ -20,6 +20,11 @@
                     </div>
 
                     <div class="flex">
+                        <label class="w-1/6" for="Host">Host</label>
+                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="text" name="host" id="host" placeholder="Host" value="<%= event.host %>"></input>
+                    </div>
+
+                    <div class="flex">
                         <label class="w-1/6" for="details">Details</label>
                         <input class="bg-slate-900 w-full p-1 h-20 rounded-r-md" type="text" name="details" id="details" value="<%= event.details %>">
                     </div>
@@ -38,12 +43,7 @@
                         <label class="w-1/6" for="endtime">End</label>
                         <input class="bg-slate-900 w-full p-1 rounded-r-md" type="datetime-local" name="endtime" id="endtime" value="<%= end %>">
                     </div>
-                    
-                    <div class="flex">                    
-                        <label class="w-1/6" for="image">Image</label>
-                        <input class="bg-slate-900 w-full p-1 rounded-r-md" type="file" name="image" id="image">
-                    </div>
-
+                
                     <input class="bg-green-900 h-10 rounded-md" type="submit" name="submit" id="submit" value="Create Event">
                 </form>
             </div>

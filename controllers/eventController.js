@@ -100,8 +100,14 @@ exports.edit = (req, res, next) => {
 
 // 6. PUT /stories/:id: Update event by ID
 exports.update = (req, res, next) => {
-  let event = req.body;
   let id = req.params.id;
+  let event = req.body; //create a new event document
+
+  let start = new Date(req.body.starttime);
+  let end = new Date(req.body.endtime);
+
+  event.starttime = start;
+  event.endttime = end;
 
   if (!id.match(/^[0-9a-fA-F]{24}$/)) {
     let err = new Error("Invalid event id");

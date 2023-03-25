@@ -17,7 +17,7 @@ router.post("/", fileUpload, controller.create);
 router.get("/:id", controller.show);
 
 // 5. GET /stories/:id/edit: Send HTML form for editing story
-router.get("/:id/edit", controller.edit);
+router.get("/:id/edit", fileUpload, controller.edit);
 
 // 6. PUT /stories/:id: Update story by ID
 router.put("/:id", controller.update);

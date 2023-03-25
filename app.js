@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const eventRoutes = require("./routes/eventRoutes");
 const mainRoutes = require("./routes/mainRoutes");
+const { fileUpload } = require("./middleware/fileUpload");
 const methodOVerride = require("method-override");
 
 // 2. Create application
@@ -46,7 +47,7 @@ app.use((err, req, res, next) => {
   if (!err.status) {
     err.status = 500;
     err.message = "Internal Server Error";
-    console.log(err)
+    console.log(err);
   }
 
   res.status(err.status);

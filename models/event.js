@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema(
   {
     title: { type: String, required: [true, "title is required"] },
-    host: { type: String, required: [true, "host is required"] },
+    host: {type: Schema.Types.ObjectId, ref: 'User'},
     category: { type: String, required: [true, "category is required"] },
     details: { type: String, required: [true, "detail is required"] },
     location: { type: String, required: [true, "location is required"] },

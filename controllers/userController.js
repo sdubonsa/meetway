@@ -68,10 +68,10 @@ exports.profile = (req, res, next)=>{
 
 exports.logout = (req, res, next)=>{
     req.session.destroy(err=>{
-        if(err) 
-           return next(err);
-       else
-            res.redirect('/');  
+        if (err)
+            return next(err);
+        else
+            res.redirect('/');
     });
    
  };

@@ -16,8 +16,12 @@
         </form>
         <form class="flex">
             <button type="submit" formmethod="GET" formaction="/events/new/" class="flex justify-center items-center h-8 px-4 py-2 text-white text-sm">New Event</button>
-            <button type="submit" formmethod="GET" formaction="/users/new/" class="flex justify-center items-center h-8 ml-8 px-4 py-2 text-white text-sm">Sign Up</button>
-            <button type="submit" formmethod="GET" formaction="/users/login/" class=" flex justify-center items-center h-8 ml-12 bg-white px-4 py-2 rounded-3xl text-sm">Log In</button>
+            <% if (!user) { %>
+                <button type="submit" formmethod="GET" formaction="/users/new/" class="flex justify-center items-center h-8 ml-8 px-4 py-2 text-white text-sm">Sign Up</button>
+                <button type="submit" formmethod="GET" formaction="/users/login/" class=" flex justify-center items-center h-8 ml-12 bg-white px-4 py-2 rounded-3xl text-sm">Log In</button>
+            <% } else { %>
+                <button type="submit" formmethod="GET" formaction="/users/logout/" class=" flex justify-center items-center h-8 ml-12 bg-white px-4 py-2 rounded-3xl text-sm">Log Out</button>
+            <% } %>
         </form>
 
     </div>
@@ -30,18 +34,17 @@
 
         <% if(errorMessages.length> 0) {%>
             <% errorMessages.forEach(message=>{%>
-                <div class='error'>
+                <div class='bg-red-400'>
                     <%=message%>
                 </div>
-                <%});%>
-                    <%}%>
+            <%});%>
+        <%}%>
         
-                        <% if(successMessages.length> 0) {%>
-        
-                            <% successMessages.forEach(message=>{%>
-                                <div class='success'>
-                                    <%=message%>
-                                </div>
-                                <%});%>
-                                    <%}%>
+        <% if(successMessages.length> 0) {%>
+            <% successMessages.forEach(message=>{%>
+                <div class='bg-green-400'>
+                    <%=message%>
+                </div>
+            <%});%>
+        <%}%>
 </header>

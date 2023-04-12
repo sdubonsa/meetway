@@ -25,6 +25,7 @@ exports.new = (req, res) => {
 // 3. POST /events: Create a event story
 exports.create = (req, res, next) => {
   let event = new model(req.body); //create a new event document
+  event.host = req.session.user; //add the author to the event document
 
   let start = new Date(req.body.starttime);
   let end = new Date(req.body.endtime);
@@ -58,8 +59,7 @@ exports.show = (req, res, next) => {
     return next(err);
   }
 
-  model
-    .findById(id)
+  model.findById(id).populate('host', 'firstName lastName')
     .then((event) => {
       if (event) {
         res.render("./event/event", { event });

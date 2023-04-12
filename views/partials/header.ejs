@@ -16,8 +16,8 @@
         </form>
         <form class="flex">
             <button type="submit" formmethod="GET" formaction="/events/new/" class="flex justify-center items-center h-8 px-4 py-2 text-white text-sm">New Event</button>
-            <button class="flex justify-center items-center h-8 ml-8 px-4 py-2 text-white text-sm">Sign Up</button>
-            <button class=" flex justify-center items-center h-8 ml-12 bg-white px-4 py-2 rounded-3xl text-sm">Log In</button>
+            <button type="submit" formmethod="GET" formaction="/users/new/" class="flex justify-center items-center h-8 ml-8 px-4 py-2 text-white text-sm">Sign Up</button>
+            <button type="submit" formmethod="GET" formaction="/users/login/" class=" flex justify-center items-center h-8 ml-12 bg-white px-4 py-2 rounded-3xl text-sm">Log In</button>
         </form>
 
     </div>
@@ -27,4 +27,21 @@
             <button type="submit" formmethod="GET" formaction="/events/" class="text-white">Events</button>
         </form>
     </div>
+
+        <% if(errorMessages.length> 0) {%>
+            <% errorMessages.forEach(message=>{%>
+                <div class='error'>
+                    <%=message%>
+                </div>
+                <%});%>
+                    <%}%>
+        
+                        <% if(successMessages.length> 0) {%>
+        
+                            <% successMessages.forEach(message=>{%>
+                                <div class='success'>
+                                    <%=message%>
+                                </div>
+                                <%});%>
+                                    <%}%>
 </header>

@@ -19,9 +19,9 @@ exports.isLoggedIn = (req, res, next) => {
 }
 
 exports.isAuthor = (req, res, next) => {
-    Event.findById(id)
+    Event.findById(req.params.id)
     .then(event=>{
-        if(event) {
+        if (event) {
             if(event.host == req.session.user) {
                 return next();
             } else {

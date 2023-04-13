@@ -39,6 +39,8 @@ exports.create = (req, res, next) => {
     .save() //insert the document to the database
     .then((event) => {
       event.image = imagePath;
+      // create successfull flash message
+      req.flash("success", "Event created successfully");
       res.redirect("/events");
     })
     .catch((err) => {
@@ -52,12 +54,6 @@ exports.create = (req, res, next) => {
 // 4. GET /stories/:id Send event with specific id
 exports.show = (req, res, next) => {
   let id = req.params.id;
-
-  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error("Invalid event id");
-    err.status = 400;
-    return next(err);
-  }
 
   model.findById(id).populate('host', 'firstName lastName')
     .then((event) => {
@@ -75,12 +71,6 @@ exports.show = (req, res, next) => {
 // 5. GET /stories/:id/edit: Send HTML form for editing story
 exports.edit = (req, res, next) => {
   let id = req.params.id;
-
-  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error("Invalid story id");
-    err.status = 400;
-    return next(err);
-  }
 
   model
     .findById(id)
@@ -109,12 +99,6 @@ exports.update = (req, res, next) => {
   event.starttime = start;
   event.endttime = end;
 
-  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error("Invalid event id");
-    err.status = 400;
-    return next(err);
-  }
-
   model
     .findByIdAndUpdate(id, event, {
       useFindAndModify: false,
@@ -122,6 +106,7 @@ exports.update = (req, res, next) => {
     })
     .then((event) => {
       if (event) {
+        req.flash("success", "Event edited successfully");
         res.redirect("/events/" + id);
       } else {
         let err = new Error("Cannot find a event with id " + id);
@@ -140,16 +125,12 @@ exports.update = (req, res, next) => {
 // 7.  DELETE /stories/:id: Delete event by ID
 exports.delete = (req, res, next) => {
   let id = req.params.id;
-  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error("Invalid event id");
-    err.status = 400;
-    return next(err);
-  }
 
   model
     .findByIdAndDelete(id, { useFindAndModify: false })
     .then((event) => {
       if (event) {
+        req.flash("success", "Event deleted successfully");
         res.redirect("/events");
       } else {
         let err = new Error("Cannot find a event with id " + id);

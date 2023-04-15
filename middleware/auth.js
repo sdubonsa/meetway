@@ -4,7 +4,7 @@ exports.isGuest = (req, res, next) => {
     if (!req.session.user) {
         return next();
     } else {
-        req.flash('error', 'You are already logged in');
+        req.flash('error', 'You are already logged in!');
         return res.redirect('/users/profile')
     }
 }
@@ -13,7 +13,7 @@ exports.isLoggedIn = (req, res, next) => {
     if (req.session.user) {
         return next();
     } else {
-        req.flash('error', 'You must be logged in to access this page');
+        req.flash('error', 'You must be logged in to access this page.');
         return res.redirect('/users/login');
     }
 }
@@ -25,7 +25,7 @@ exports.isAuthor = (req, res, next) => {
             if(event.host == req.session.user) {
                 return next();
             } else {
-                let err = new Error('You are not authorized to edit this event');
+                let err = new Error('You are not authorized to edit this event.');
                 err.status = 401;
                 return next(err);
             }

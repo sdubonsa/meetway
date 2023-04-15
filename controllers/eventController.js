@@ -1,4 +1,6 @@
 const model = require("../models/event");
+var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
 
 // 1. GET /events: Send all events to the user
 exports.index = (req, res) => {
@@ -27,13 +29,9 @@ exports.create = (req, res, next) => {
   let event = new model(req.body); //create a new event document
   event.host = req.session.user; //add the author to the event document
 
-  let start = new Date(req.body.starttime);
-  let end = new Date(req.body.endtime);
   let imagePath = "/images/" + req.file.filename;
 
   event.image = imagePath;
-  event.starttime = start;
-  event.endttime = end;
 
   event
     .save() //insert the document to the database
@@ -58,7 +56,9 @@ exports.show = (req, res, next) => {
   model.findById(id).populate('host', 'firstName lastName')
     .then((event) => {
       if (event) {
-        res.render("./event/event", { event });
+        let start = event.starttime.toLocaleDateString("en-US", options);
+        let end = event.endtime.toLocaleDateString("en-US", options);
+        res.render("./event/event", { event, start, end });
       } else {
         let err = new Error("Cannot find a event with id " + id);
         err.status = 404;
@@ -76,8 +76,9 @@ exports.edit = (req, res, next) => {
     .findById(id)
     .then((event) => {
       if (event) {
-        let start = event.starttime.toISOString().slice(0, -1);
-        let end = event.endtime.toISOString().slice(0, -1);
+        // convert date to local datetime 
+        let start = new Date(event.starttime - tzoffset).toISOString().slice(0, -1);
+        let end = new Date(event.endtime - tzoffset).toISOString().slice(0, -1);
         res.render("./event/edit", { event, start, end });
       } else {
         let err = new Error("Cannot find a event with id " + id);
@@ -92,12 +93,6 @@ exports.edit = (req, res, next) => {
 exports.update = (req, res, next) => {
   let id = req.params.id;
   let event = req.body; //create a new event document
-
-  let start = new Date(req.body.starttime);
-  let end = new Date(req.body.endtime);
-
-  event.starttime = start;
-  event.endttime = end;
 
   model
     .findByIdAndUpdate(id, event, {

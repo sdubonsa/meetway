@@ -1,6 +1,16 @@
 const model = require("../models/event");
-var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+const rsvpModel = require("../models/rsvp");
+const userModel = require("../models/user");
+
+var options = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+};
+var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
 
 // 1. GET /events: Send all events to the user
 exports.index = (req, res) => {
@@ -53,7 +63,9 @@ exports.create = (req, res, next) => {
 exports.show = (req, res, next) => {
   let id = req.params.id;
 
-  model.findById(id).populate('host', 'firstName lastName')
+  model
+    .findById(id)
+    .populate("host", "firstName lastName")
     .then((event) => {
       if (event) {
         let start = event.starttime.toLocaleDateString("en-US", options);
@@ -76,8 +88,10 @@ exports.edit = (req, res, next) => {
     .findById(id)
     .then((event) => {
       if (event) {
-        // convert date to local datetime 
-        let start = new Date(event.starttime - tzoffset).toISOString().slice(0, -1);
+        // convert date to local datetime
+        let start = new Date(event.starttime - tzoffset)
+          .toISOString()
+          .slice(0, -1);
         let end = new Date(event.endtime - tzoffset).toISOString().slice(0, -1);
         res.render("./event/edit", { event, start, end });
       } else {
@@ -134,8 +148,39 @@ exports.delete = (req, res, next) => {
       }
     })
     .catch((err) => next(err));
-}
+};
 
 function findByCategory(events, category) {
   return events.filter((event) => event.category === category);
+}
+
+// 8. POST /events/:id/rsvp: Create a rsvp for an event
+exports.rsvp = (req, res, next) => {
+  let event = req.params.id;
+  let user = req.session.user;
+  let rsvpStat = req.body;
+
+  console.log(event);
+  console.log(rsvpStat);
+  console.log(user);
+
+  let rsvp = new rsvpModel({
+    event: event,
+    user: user,
+    status: rsvpStat.status,
+  }); //create a new rsvp document
+
+  rsvp
+    .save() //insert the document to the database
+    .then((rsvp) => {
+      // create successfull flash message
+      req.flash("success", "RSVP created successfully");
+      res.redirect("/events");
+    })
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        err.status = 400;
+      }
+      next(err);
+    });
 };

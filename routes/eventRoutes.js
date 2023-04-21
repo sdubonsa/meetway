@@ -1,8 +1,8 @@
 const express = require("express");
 const controller = require("../controllers/eventController");
 const { fileUpload } = require("../middleware/fileUpload");
-const {isLoggedIn, isAuthor} = require('../middleware/auth');
-const {validateId} = require('../middleware/validator');
+const { isLoggedIn, isAuthor } = require("../middleware/auth");
+const { validateId } = require("../middleware/validator");
 
 const router = express.Router();
 
@@ -19,12 +19,22 @@ router.post("/", isLoggedIn, fileUpload, controller.create);
 router.get("/:id", validateId, controller.show);
 
 // 5. GET /stories/:id/edit: Send HTML form for editing story
-router.get("/:id/edit", validateId, isLoggedIn, isAuthor, fileUpload, controller.edit);
+router.get(
+  "/:id/edit",
+  validateId,
+  isLoggedIn,
+  isAuthor,
+  fileUpload,
+  controller.edit
+);
 
 // 6. PUT /stories/:id: Update story by ID
 router.put("/:id", validateId, isLoggedIn, isAuthor, controller.update);
 
 // 7.  DELETE /stories/:id: Delete story by ID
 router.delete("/:id", validateId, isLoggedIn, isAuthor, controller.delete);
+
+// 8. RSVP
+router.post("/:id/rsvp", validateId, isLoggedIn, controller.rsvp);
 
 module.exports = router;

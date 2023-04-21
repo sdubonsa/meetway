@@ -11,30 +11,15 @@
     <div class="flex gap-4 mt-5">
       <form action="/events/<%= event.id %>/rsvp" method="POST">
         <input type="hidden" name="rsvp" value="yes" />
-        <button
-          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          type="submit"
-        >
-          RSVP
-        </button>
+        <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">RSVP</button>
       </form>
       <form action="/events/<%= event.id %>/rsvp" method="POST">
         <input type="hidden" name="rsvp" value="no" />
-        <button
-          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          type="submit"
-        >
-          Decline
-        </button>
+        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Dec </button>
       </form>
       <form action="/events/<%= event.id %>/rsvp" method="POST">
         <input type="hidden" name="rsvp" value="maybe" />
-        <button
-          class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-          type="submit"
-        >
-          Maybe
-        </button>
+        <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" type="submit">Maybe</button>
       </form>
     </div>
 
@@ -42,22 +27,10 @@
     <div class="flex gap-4 mt-5">
       <img class="w-auto h-40" src="<%= event.image %>" />
       <div class="text-slate-300">
-        <p>
-          <span class="font-bold text-white">Host: </span><%=
-          event.host.firstName + ' ' + event.host.lastName %>
-        </p>
-        <p>
-          <span class="font-bold text-white">Date and Time: </span><%= start %>
-          - <%= end %>
-        </p>
-        <p>
-          <span class="font-bold text-white">Location: </span><%= event.location
-          %>
-        </p>
-        <p>
-          <span class="font-bold text-white">Details: </span><%= event.details
-          %>
-        </p>
+        <p><span class="font-bold text-white">Host: </span><%=event.host.firstName + ' ' + event.host.lastName %></p>
+        <p><span class="font-bold text-white">Date and Time: </span><%= start %> - <%= end %></p>
+        <p><span class="font-bold text-white">Location: </span><%= event.location%></p>
+        <p><span class="font-bold text-white">Details: </span><%= event.details%></p>
       </div>
     </div>
   </div>

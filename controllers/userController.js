@@ -68,6 +68,12 @@ exports.profile = (req, res, next) => {
         // find rsvp events
         Event.find({_id: {$in: rsvps.map(rsvp => rsvp.event)}})
         .then((rsvpEvents) => {
+            // a check to make sure the rsvp events are in the same order as the rsvps
+            rsvps.sort((a, b) => {
+                return rsvpEvents.findIndex(event => event._id.equals(a.event)) - rsvpEvents.findIndex(event => event._id.equals(b.event))
+            })
+            console.log("RSVP Evnets: " + rsvpEvents)
+            console.log("rsvps" + rsvps)
             res.render("./user/profile", { user, events, rsvpEvents, rsvps });
         })
         .catch((err) => next(err));

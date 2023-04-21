@@ -167,7 +167,7 @@ exports.rsvp = (req, res, next) => {
   let rsvp = new rsvpModel({
     event: event,
     user: user,
-    status: rsvpStat.status,
+    status: rsvpStat.rsvp,
   }); //create a new rsvp document
 
   rsvp

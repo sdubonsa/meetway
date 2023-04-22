@@ -74,9 +74,10 @@ exports.show = (req, res, next) => {
         rsvpModel
           .find({ event: id })
           .then((rsvps) => {
-            console.log(rsvps)
             let count = rsvps.length;
-            res.render("./event/event", { event, start, end, count });
+            // has the user already rsvp'd for this event?
+            let rsvp = rsvps.find((rsvp) => rsvp.user == req.session.user);
+            res.render("./event/event", { event, start, end, count, rsvp });
           })
           .catch((err) => next(err));
       } else {
@@ -168,10 +169,6 @@ exports.rsvp = (req, res, next) => {
   let user = req.session.user;
   let rsvpStat = req.body;
 
-  console.log(event);
-  console.log(rsvpStat);
-  console.log(user);
-
   let rsvp = new rsvpModel({
     event: event,
     user: user,
@@ -191,4 +188,24 @@ exports.rsvp = (req, res, next) => {
       }
       next(err);
     });
+};
+
+exports.updateRsvp = (req, res, next) => {
+  let event = req.params.id;
+  let user = req.session.user;
+  let rsvpStat = req.body;
+
+  // check if user has already rsvp'd and update status
+  rsvpModel
+    .findOneAndUpdate({ event: event, user: user }, { status: rsvpStat.rsvp }, {
+      useFindAndModify: false,
+      runValidators: true,
+    })
+    .then((rsvp) => {
+      if (rsvp) {
+        req.flash("success", "RSVP updated successfully");
+        res.redirect("/events");
+      }
+    })
+    .catch((err) => next(err));
 };

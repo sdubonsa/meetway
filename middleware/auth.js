@@ -1,4 +1,5 @@
 const Event = require('../models/event');
+const RSVP = require('../models/rsvp');
 
 exports.isGuest = (req, res, next) => {
     if (!req.session.user) {
@@ -57,3 +58,22 @@ exports.isNotAuthor = (req, res, next) => {
     })
     .catch(err=>next(err));
 }
+
+exports.rsvp = (req, res, next) => {
+    RSVP.findOne({event: req.params.id, user: req.session.user})
+    .then(rsvp=>{
+        if (rsvp) {
+            // update rsvp
+            rsvp.status = req.body.status;
+            rsvp.save()
+            .then(rsvp=>{
+                req.flash('success', 'Your RSVP has been updated.');
+                return res.redirect('/events/' + req.params.id);
+            })
+            .catch(err=>next(err));
+        } else {
+            return next();
+        }
+    })
+    .catch(err=>next(err));
+};

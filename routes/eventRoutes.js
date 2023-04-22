@@ -37,4 +37,7 @@ router.delete("/:id", validateId, isLoggedIn, isAuthor, controller.delete);
 // 8. RSVP
 router.post("/:id/rsvp", validateId, isLoggedIn, isNotAuthor, controller.rsvp);
 
+// 9. Update RSVP
+router.put("/:id/rsvp", validateId, isLoggedIn, isNotAuthor, controller.updateRsvp);
+
 module.exports = router;

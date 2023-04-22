@@ -1,7 +1,7 @@
 const express = require("express");
 const controller = require("../controllers/eventController");
 const { fileUpload } = require("../middleware/fileUpload");
-const { isLoggedIn, isAuthor } = require("../middleware/auth");
+const { isLoggedIn, isAuthor, isNotAuthor } = require("../middleware/auth");
 const { validateId } = require("../middleware/validator");
 
 const router = express.Router();
@@ -35,6 +35,6 @@ router.put("/:id", validateId, isLoggedIn, isAuthor, controller.update);
 router.delete("/:id", validateId, isLoggedIn, isAuthor, controller.delete);
 
 // 8. RSVP
-router.post("/:id/rsvp", validateId, isLoggedIn, controller.rsvp);
+router.post("/:id/rsvp", validateId, isLoggedIn, isNotAuthor, controller.rsvp);
 
 module.exports = router;

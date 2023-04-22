@@ -37,3 +37,23 @@ exports.isAuthor = (req, res, next) => {
     })
     .catch(err=>next(err));
 }
+
+exports.isNotAuthor = (req, res, next) => {
+    Event.findById(req.params.id)
+    .then(event=>{
+        if (event) {
+            if(event.host != req.session.user) {
+                return next();
+            } else {
+                let err = new Error('This is your event. You cannot RSVP to your own event.');
+                err.status = 401;
+                return next(err);
+            }
+        } else {
+            let err = new Error('Cannot find a event with id ' + id);
+            err.status = 404;
+            return next(err);
+        }
+    })
+    .catch(err=>next(err));
+}

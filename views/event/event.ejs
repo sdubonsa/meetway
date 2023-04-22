@@ -15,7 +15,7 @@
       </form>
       <form action="/events/<%= event.id %>/rsvp" method="POST">
         <input type="hidden" name="rsvp" value="no" />
-        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Dec </button>
+        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Decline</button>
       </form>
       <form action="/events/<%= event.id %>/rsvp" method="POST">
         <input type="hidden" name="rsvp" value="maybe" />
@@ -31,6 +31,7 @@
         <p><span class="font-bold text-white">Date and Time: </span><%= start %> - <%= end %></p>
         <p><span class="font-bold text-white">Location: </span><%= event.location%></p>
         <p><span class="font-bold text-white">Details: </span><%= event.details%></p>
+        <p><span class="font-bold text-white">Number of RSVPs: </span><%= count %></p>
       </div>
     </div>
   </div>

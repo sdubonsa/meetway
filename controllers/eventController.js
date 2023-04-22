@@ -70,7 +70,15 @@ exports.show = (req, res, next) => {
       if (event) {
         let start = event.starttime.toLocaleDateString("en-US", options);
         let end = event.endtime.toLocaleDateString("en-US", options);
-        res.render("./event/event", { event, start, end });
+        // number of rsvps for this event
+        rsvpModel
+          .find({ event: id })
+          .then((rsvps) => {
+            console.log(rsvps)
+            let count = rsvps.length;
+            res.render("./event/event", { event, start, end, count });
+          })
+          .catch((err) => next(err));
       } else {
         let err = new Error("Cannot find a event with id " + id);
         err.status = 404;

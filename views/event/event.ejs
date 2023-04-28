@@ -7,40 +7,41 @@
       <h2 class="text-xl mr-4"><%= event.title %></h2>
     </div>
 
-    <% if(!rsvp) { %>
-      <!-- display rsvp buttons -->
-      <div class="flex gap-4 mt-5">
-        <form action="/events/<%= event.id %>/rsvp" method="POST">
-          <input type="hidden" name="rsvp" value="yes" />
-          <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">RSVP</button>
-        </form>
-        <form action="/events/<%= event.id %>/rsvp" method="POST">
-          <input type="hidden" name="rsvp" value="no" />
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Decline</button>
-        </form>
-        <form action="/events/<%= event.id %>/rsvp" method="POST">
-          <input type="hidden" name="rsvp" value="maybe" />
-          <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" type="submit">Maybe</button>
-        </form>
-      </div>
-    <% } else { %>
-      <!-- dispaly edit rsvp buttons -->
-      <div class="flex gap-4 mt-5">
-        <form method="POST" action = "/events/<%=event.id%>/rsvp?_method=PUT">
-          <input type="hidden" name="rsvp" value="yes" />
-          <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">RSVP</button>
-        </form>
-        <form method="POST" action = "/events/<%=event.id%>/rsvp?_method=PUT">
-          <input type="hidden" name="rsvp" value="no" />
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Decline</button>
-        </form>
-        <form method="POST" action = "/events/<%=event.id%>/rsvp?_method=PUT">
-          <input type="hidden" name="rsvp" value="maybe" />
-          <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" type="submit">Maybe</button>
-        </form>
-      </div>
+    <% if(!isHost) { %> 
+      <% if(!rsvp) { %>
+        <!-- display rsvp buttons -->
+        <div class="flex gap-4 mt-5">
+          <form action="/events/<%= event.id %>/rsvp" method="POST">
+            <input type="hidden" name="rsvp" value="yes" />
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">RSVP</button>
+          </form>
+          <form action="/events/<%= event.id %>/rsvp" method="POST">
+            <input type="hidden" name="rsvp" value="no" />
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Decline</button>
+          </form>
+          <form action="/events/<%= event.id %>/rsvp" method="POST">
+            <input type="hidden" name="rsvp" value="maybe" />
+            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" type="submit">Maybe</button>
+          </form>
+        </div>
+      <% } else { %>
+        <!-- dispaly edit rsvp buttons -->
+        <div class="flex gap-4 mt-5">
+          <form method="POST" action = "/events/<%=event.id%>/rsvp?_method=PUT">
+            <input type="hidden" name="rsvp" value="yes" />
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" type="submit">RSVP</button>
+          </form>
+          <form method="POST" action = "/events/<%=event.id%>/rsvp?_method=PUT">
+            <input type="hidden" name="rsvp" value="no" />
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="submit">Decline</button>
+          </form>
+          <form method="POST" action = "/events/<%=event.id%>/rsvp?_method=PUT">
+            <input type="hidden" name="rsvp" value="maybe" />
+            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" type="submit">Maybe</button>
+          </form>
+        </div>
+      <% } %>
     <% } %>
-
     <!-- display event details -->
     <div class="flex gap-4 mt-5">
       <img class="w-auto h-40" src="<%= event.image %>" />

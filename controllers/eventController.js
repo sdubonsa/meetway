@@ -75,9 +75,18 @@ exports.show = (req, res, next) => {
           .find({ event: id })
           .then((rsvps) => {
             let count = rsvps.length;
+            let isHost = false;
             // has the user already rsvp'd for this event?
             let rsvp = rsvps.find((rsvp) => rsvp.user == req.session.user);
-            res.render("./event/event", { event, start, end, count, rsvp });
+            // if rsvp value is not undefined, but rsvp.status is decline, then subtract 1 from count
+            if (rsvp && rsvp.status === "no") {
+              count--;
+            }
+            // check if user is the host of the event
+            if (event.host.id == req.session.user) {
+              isHost = true;
+            }
+            res.render("./event/event", { event, start, end, count, rsvp, isHost });
           })
           .catch((err) => next(err));
       } else {
@@ -187,7 +196,7 @@ exports.rsvp = (req, res, next) => {
     .then((rsvp) => {
       // create successfull flash message
       req.flash("success", "RSVP created successfully");
-      res.redirect("/events");
+      res.redirect("/events/" + event);
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
@@ -211,7 +220,7 @@ exports.updateRsvp = (req, res, next) => {
     .then((rsvp) => {
       if (rsvp) {
         req.flash("success", "RSVP updated successfully");
-        res.redirect("/events");
+        res.redirect("/events/" + event);
       }
     })
     .catch((err) => next(err));
